@@ -1,10 +1,3 @@
- # -*- coding: utf-8 -*-
-"""
-Created on Feb 18 10:08:39 2021
-cnv_sim_sbi
-
-@author: grace
-"""
 import random
 import argparse
 import pandas as pd

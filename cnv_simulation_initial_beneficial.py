@@ -49,29 +49,7 @@ def simpleWF(N, generation, s_cnv, m_cnv, p_0, seed=None):
 
     
     assert N > 0
-    N = np.uint64(N)
-    
-    # First 20 generations - wt, cnv-, snv
-#     g_0 = 20
-#     N_0 = np.uint64(10**6)
-    
-#     w_0 = np.array([1, 1 + s_cnv, 1 + s_snv], dtype = 'float64')
-#     S_0 = np.diag(w_0)
-#     M_0 = np.array([[1-m_cnv-m_snv,0,0],
-#                     [m_cnv,1,0],
-#                     [m_snv,0,1]])
-#     assert np.allclose(M_0.sum(axis=0), 1)
-#     E_0 = M_0 @ S_0
-#     n_0 = np.zeros(3)
-#     n_0[0] = N_0*(1-p_0)
-#     n_0[1] = N_0*p_0
-    
-#     for t in range(g_0+1):    
-#         p = n_0/N_0  # counts to frequencies
-#         p = E_0 @ p.reshape((3, 1))  # natural selection + mutation        
-#         p /= p.sum()  # rescale proportions
-#         n_0 = np.random.multinomial(N_0, np.ndarray.flatten(p)) # random genetic drift
-    
+    N = np.uint64(N)    
     
     # Order is: wt, cnv+, cnv-, snv
     
@@ -91,11 +69,6 @@ def simpleWF(N, generation, s_cnv, m_cnv, p_0, seed=None):
 
     # rows are genotypes, p has proportions after initial (unreported) growth
     n = np.zeros(4)
-    # n[0] = N*(1-p[1]-p[2]) # wt
-    # n[1] = 0 # cnv+
-    # n[2] = N*p[1] # cnv-
-    # n[3] = N*p[2] # snv
-    
     n[2] = N*p_0 # cnv-
     n[0] = N*(1-p_0) # wt
     
