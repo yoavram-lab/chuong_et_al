@@ -31,7 +31,7 @@ generation=np.genfromtxt(g_file,delimiter=',', skip_header=1,dtype="int64")
 
 #### prior ####
 prior_min = np.log10(np.array([1e-2,1e-7,1e-8]))
-prior_max = np.log10(np.array([1,1e-2,1e-2]))
+prior_max = np.log10(np.array([1,0.5,1e-2]))
 prior = utils.BoxUniform(low=torch.tensor(prior_min), 
                          high=torch.tensor(prior_max))
 

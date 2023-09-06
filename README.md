@@ -14,4 +14,3 @@ To run the inference and see its results:
 4. Go to Empirical Analysis.ipynb, change the posterior's path and run the notebook. 
 
 For more information, you can contact Nadav Ben Nun (nadavbennun1@mail.tau.ac.il) or the Ram lab at Tel Aviv University.
-aaa
