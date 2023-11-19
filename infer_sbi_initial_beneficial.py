@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*-
 import random
 import argparse
 import pandas as pd
@@ -10,6 +11,9 @@ import scipy.stats
 import scipy.optimize
 import seaborn as sns
 import os
+from PyPDF2 import PdfFileMerger
+from scipy.special import logsumexp
+import pyabc.visualization
 import pickle
 
 from cnv_simulation_initial_beneficial import CNVsimulator_simpleWF
@@ -18,6 +22,8 @@ import sbi.utils as utils
 from sbi.inference.base import infer
 from sbi.inference import SNPE, prepare_for_sbi
 import torch
+import arviz as az
+from sbi.utils import MultipleIndependent
 from sbi import analysis as analysis
 
 
@@ -76,7 +82,7 @@ density_estimator = inference.append_simulations(theta_presimulated, x_presimula
 posterior = inference.build_posterior(density_estimator)
 
 #### save posterior ####
-with open(f"posteriors/posterior_{name}.pkl", "wb") as handle:
+with open(f"posteriors/posterior_{name}_{stop_after_epochs}.pkl", "wb") as handle:
     pickle.dump(posterior, handle)
 
 #### Get Training and Validation losses ####
