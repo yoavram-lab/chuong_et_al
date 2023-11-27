@@ -52,7 +52,7 @@ reps=1
 generation=np.genfromtxt(g_file,delimiter=',', skip_header=1,dtype="int64")
 
 #### prior ####
-prior_min = np.log10(np.array([1e-2,1e-7,1e-8]))
+prior_min = np.log10(np.array([1e-3,1e-9,1e-8]))
 prior_max = np.log10(np.array([1,0.5,1e-2]))
 prior = utils.BoxUniform(low=torch.tensor(prior_min), 
                          high=torch.tensor(prior_max))
@@ -74,6 +74,7 @@ simulator, prior = prepare_for_sbi(CNVsimulator, prior)
 theta_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_theta,delimiter=',')).type('torch.FloatTensor')
 x_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_data,delimiter=',')).type('torch.FloatTensor')
 
+# Training stops after 100 unimproved epochs
 stop_after_epochs = 100
 
 #### run inference ####

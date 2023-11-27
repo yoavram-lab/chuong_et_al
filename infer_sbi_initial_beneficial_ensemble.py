@@ -76,6 +76,8 @@ simulator, prior = prepare_for_sbi(CNVsimulator, prior)
 #### get presimulated data ####
 theta_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_theta,delimiter=',')).type('torch.FloatTensor')
 x_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_data,delimiter=',')).type('torch.FloatTensor')
+
+# Resources of each network in the ensemble
 stop_after_epochs = 20
 
 

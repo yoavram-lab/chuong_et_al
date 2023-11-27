@@ -16,7 +16,7 @@ def get_params(parameters):
 def simpleWF(N, generation, s_cnv, m_cnv, p_0, seed=None):
     """ CNV evolution simulator
     Simulates CNV and SNV evolution for x generations
-    Returns proportion of the population with a CNV for generations observed in Lauer et al. 2018 as 1d np.array same length as generation
+    Returns proportion of the population with a CNV for specific generations
     
     Parameters
     -------------------
