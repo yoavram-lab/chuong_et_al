@@ -94,10 +94,10 @@ def simpleWF(N, generation, s_cnv, m_cnv, p_0, max_possible, seed=None):
         p = E @ p.reshape((4, 1))  # natural selection + mutation
         
         P = (1+s_cnv)*P/p.sum() # selection for previous generations, next gens remain 0
+        P = np.random.multinomial(min(int(P.sum()),N), np.ndarray.flatten(P/P.sum())) # random genetic drift in CNVs
         
         p /= p.sum()  # rescale proportions
         n = np.random.multinomial(N, np.ndarray.flatten(p)) # random genetic drift
-    
     return np.array([Q,P]).reshape(2,len(Q))
 
 def CNVsimulator_simpleWF(reps, N, generation, parameters, seed=None):
