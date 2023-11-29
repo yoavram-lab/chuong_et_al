@@ -98,10 +98,11 @@ class OverallPosterior:
         if len(posterior_samples) < 30:
             print('You are using less than 30 samples. It is a bit risky to draw conclusions from that...')
         
-        num_bins = 10            
+        num_bins = 20            
         columns = ['$s_C$','$δ_C$','$p_0$']
         g = pairplot(pd.DataFrame(posterior_samples, columns = columns), 
                      corner = True, plot_kws = {'color': color}, diag_kws = {'color': color, 'bins':num_bins}, kind = 'kde', diag_kind='hist')
+        g.fig.set_size_inches(9,6)
                 
         # Titles, colors, HDIs, etc.
         
@@ -110,12 +111,16 @@ class OverallPosterior:
             g.axes[j,j].axvline(posterior_samples[:,j].quantile(0.975), color='blue')
             g.axes[j,j].axvline(posterior_samples[:,j].quantile(0.025), color='blue')
             g.axes[j,j].axvline(10**self.map[j], color='red', label=labels[j], linewidth=3)
+            
             if j>0:
                 g.axes[2,j].set_xscale('log')
+                g.axes[j,0].set_yscale('log')
+
         
         g.fig.legend(fontsize=12, loc=(0.6, 0.7))
         g.map_lower(corrfunc)
         g.figure.tight_layout(pad=1)
+               
         return
     
     def get_log_C(self):
