@@ -105,23 +105,30 @@ class OverallPosterior:
         g.fig.set_size_inches(9,6)
                 
         # Titles, colors, HDIs, etc.
-        
         labels = [f'{columns[0]} MAP = {round(float(10**self.map[0]),2)}', f'{columns[1]} MAP = $10^{ {round(float(self.map[1]),2)} }$', f'{columns[2]} MAP = $10^{ {round(float(self.map[2]),2)} }$']
-        for j in range(3):
+        map_label='\n'.join(labels)
+        
+        for j in range(len(self.prior.base_dist.low)):
             g.axes[j,j].axvline(posterior_samples[:,j].quantile(0.975), color='blue')
             g.axes[j,j].axvline(posterior_samples[:,j].quantile(0.025), color='blue')
-            g.axes[j,j].axvline(10**self.map[j], color='red', label=labels[j], linewidth=3)
-            
-            if j>0:
-                g.axes[2,j].set_xscale('log')
-                g.axes[j,0].set_yscale('log')
+            g.axes[j,j].axvline(10**self.map[j], color='red', linewidth=3)
+            if j==2:
+                g.axes[j,j].axvline(posterior_samples[:,j].quantile(0.025), label='95% HDI', color='blue')
+                g.axes[j,j].axvline(10**self.map[j], color='red', label=map_label, linewidth=3)
+
+                
+        #     if j>0:
+        #         g.axes[2,j].set_xscale('log')
+        #         g.axes[j,0].set_yscale('log')
+        
+                       
 
         
         g.fig.legend(fontsize=12, loc=(0.6, 0.7))
         g.map_lower(corrfunc)
         g.figure.tight_layout(pad=1)
                
-        return
+        return g
     
     def get_log_C(self):
         def get_grid(posterior, x, n, epsilon):
