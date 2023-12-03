@@ -18,7 +18,7 @@ class OverallPosterior:
         self.amortized_posterior = amortized_posterior
         self.Xs = Xs # Observations
         self.n_eval = n_eval # Granularity
-        self.log_C = log_C # Normalizing constant, can be re-calculated using validate_log_C
+        self.log_C = log_C # Normalizing constant, can be re-calculated using get_log_C
         self.epsilon = epsilon # Sensitivity, minimal reported value for a single observation by the amortized posterior
         self.map = None
         self.samples = []
