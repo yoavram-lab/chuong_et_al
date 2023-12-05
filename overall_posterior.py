@@ -101,7 +101,7 @@ class OverallPosterior:
         num_bins = 20            
         columns = ['$s_C$','$δ_C$','$p_0$']
         g = pairplot(pd.DataFrame(posterior_samples, columns = columns), 
-                     corner = True, plot_kws = {'color': color}, diag_kws = {'color': color, 'bins':num_bins}, kind = 'kde', diag_kind='hist')
+                     corner = True, plot_kws = {'color': color, 'levels':4}, diag_kws = {'color': color, 'bins':num_bins}, kind = 'kde', diag_kind='hist')
         g.fig.set_size_inches(9,6)
                 
         # Titles, colors, HDIs, etc.
