@@ -47,6 +47,30 @@ class OverallPosterior:
         A = np.prod(lens) # Prior volume
         return sum(log_probs) + self.log_C + np.log((1/A)**(1-r))
     
+    
+    def individual_log_probs(self, theta):
+        # get number of reps
+        r = len(self.Xs)
+
+        # switch to MCMC-posterior for faster calculations
+        potential_fn = self.amortized_posterior.potential_fn
+        potential_fn.set_x(self.Xs.iloc[0,:]) # This means nothing, only needed for initalization of MCMC-Posterior
+        posterior_mcmc = MCMCPosterior(potential_fn, proposal = self.prior)
+        
+        # epsilon must be a tensor
+        eps = torch.tensor(self.epsilon)
+        if type(theta) != type(torch.tensor(4.2)):
+            theta = torch.tensor(theta, dtype=torch.float32)
+        if len(theta.size()) > 1:
+            t = theta.size()[0]
+            eps = torch.tensor([eps for i in range(t)])
+
+        # Get log_prob value
+        log_probs = [float(torch.max(eps,posterior_mcmc.set_default_x(self.Xs.iloc[i,:]).potential(theta))) for i in range(r)] # MCMC-Posterior's potential = log_prob
+        lens = np.array([float(self.prior.base_dist.high[i])-float(self.prior.base_dist.low[i]) for i in range(len(self.prior.base_dist.high))]) # Prior dimensions
+        A = np.prod(lens) # Prior volume
+        return np.array(log_probs) + self.log_C/r + np.log((1/A)**(1-r))/r
+    
     # Sample from the overall posterior using rejection sampling
     def sample(self, n_samples, jump = int(10**6), keep=True):
         samples = []
