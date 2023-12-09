@@ -66,10 +66,10 @@ class OverallPosterior:
             eps = torch.tensor([eps for i in range(t)])
 
         # Get log_prob value
-        log_probs = [float(posterior_mcmc.set_default_x(self.Xs.iloc[i,:]).potential(theta)) for i in range(r)] # MCMC-Posterior's potential = log_prob
+        log_probs = [float(torch.max(eps,posterior_mcmc.set_default_x(self.Xs.iloc[i,:]).potential(theta))) for i in range(r)] # MCMC-Posterior's potential = log_prob
         lens = np.array([float(self.prior.base_dist.high[i])-float(self.prior.base_dist.low[i]) for i in range(len(self.prior.base_dist.high))]) # Prior dimensions
         A = np.prod(lens) # Prior volume
-        return np.array(log_probs)
+        return np.array(log_probs) + float(self.log_C + np.log((1/A)**(1-r))) / r
     
     # Sample from the overall posterior using rejection sampling
     def sample(self, n_samples, jump = int(10**6), keep=True):
