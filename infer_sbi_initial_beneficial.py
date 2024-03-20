@@ -71,8 +71,8 @@ def CNVsimulator(cnv_params):
 simulator, prior = prepare_for_sbi(CNVsimulator, prior)
 
 #### get presimulated data ####
-theta_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_theta,delimiter=',')).type('torch.FloatTensor')
-x_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_data,delimiter=',')).type('torch.FloatTensor')
+theta_presimulated = torch.tensor(np.genfromtxt(presim_theta,delimiter=',')).type('torch.FloatTensor')
+x_presimulated = torch.tensor(np.genfromtxt(presim_data,delimiter=',')).type('torch.FloatTensor')
 
 # Training stops after 100 unimproved epochs
 stop_after_epochs = 100

@@ -74,11 +74,11 @@ def CNVsimulator(cnv_params):
 simulator, prior = prepare_for_sbi(CNVsimulator, prior)
 
 #### get presimulated data ####
-theta_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_theta,delimiter=',')).type('torch.FloatTensor')
-x_presimulated = torch.tensor(np.genfromtxt('presimulated_data/'+presim_data,delimiter=',')).type('torch.FloatTensor')
+theta_presimulated = torch.tensor(np.genfromtxt(presim_theta,delimiter=',')).type('torch.FloatTensor')
+x_presimulated = torch.tensor(np.genfromtxt(presim_data,delimiter=',')).type('torch.FloatTensor')
 
 # Resources of each network in the ensemble
-stop_after_epochs = 20
+stop_after_epochs = 100
 
 
 def train(i):
@@ -94,7 +94,7 @@ def train(i):
 
 
     #### save posterior ####
-    ending = f'Chuong_ensemble_{i}'
+    ending = f'Chuong_ensemble{stop_after_epochs}_{i}'
     with open(f"posteriors/ensemble/{ending}.pkl", "wb") as handle:
         pickle.dump(posterior, handle)
 
