@@ -1,4 +1,4 @@
-# chuong_et_al
+# Simulation-based inference for Chuong et al. 2024
 
 This is the code for the simulation-based inference of the paper:
 > Julie N. Chuong, Nadav Ben Nun, Ina Suresh, Julia Matthews, Titir De, Grace Avecilla, Farah Abdul-Rahman, Nathan Brandt, Yoav Ram, David Gresham (2024) _DNA replication errors are a major source of adaptive gene amplification._
